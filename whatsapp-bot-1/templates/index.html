@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Government Hospital WhatsApp Assistant</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="phone">
+
+        <!-- Header -->
+
+        <div class="header">
+
+            <div class="avatar">
+
+                🏥
+
+            </div>
+
+            <div class="header-info">
+
+                <h2>Government Hospital Assistant</h2>
+
+                <span>🟢 Online</span>
+
+            </div>
+
+        </div>
+
+        <!-- Quick Buttons -->
+
+        <div class="quick-buttons">
+
+            <button onclick="quickMessage('Hello')">
+                👋 Hello
+            </button>
+
+            <button onclick="quickMessage('OPD')">
+                🕘 OPD
+            </button>
+
+            <button onclick="quickMessage('Emergency')">
+                🚑 Emergency
+            </button>
+
+            <button onclick="quickMessage('Cardiology')">
+                ❤️ Cardiology
+            </button>
+
+            <button onclick="quickMessage('Orthopedics')">
+                🦴 Orthopedics
+            </button>
+
+            <button onclick="quickMessage('Pediatrics')">
+                👶 Pediatrics
+            </button>
+
+            <button onclick="quickMessage('Registration')">
+                📝 Registration
+            </button>
+
+            <button onclick="quickMessage('Blood Bank')">
+                🩸 Blood Bank
+            </button>
+
+            <button onclick="quickMessage('Pharmacy')">
+                💊 Pharmacy
+            </button>
+
+            <button onclick="quickMessage('Ayushman Bharat')">
+                🪪 Ayushman
+            </button>
+
+            <button onclick="quickMessage('Contact')">
+                ☎️ Contact
+            </button>
+
+        </div>
+
+        <!-- Chat Area -->
+
+        <div id="chat-box" class="chat-box">
+
+            <div class="bot-message">
+
+                👋 <b>Welcome to Government Hospital Assistant.</b>
+
+                <br><br>
+
+                I can help you with:
+
+                <br><br>
+
+                • OPD Timings
+
+                <br>
+
+                • Emergency Services
+
+                <br>
+
+                • Department Guidance
+
+                <br>
+
+                • Registration Counter
+
+                <br>
+
+                • Blood Bank
+
+                <br>
+
+                • Pharmacy
+
+                <br>
+
+                • Laboratory
+
+                <br>
+
+                • X-Ray
+
+                <br>
+
+                • Ayushman Bharat
+
+                <br>
+
+                • Contact Information
+
+                <br><br>
+
+                Select a quick button above or type your question below.
+
+            </div>
+
+        </div>
+
+        <!-- Input -->
+
+        <div class="input-area">
+
+            <input
+
+                id="user-input"
+
+                type="text"
+
+                placeholder="Ask about OPD, Cardiology, Blood Bank..."
+
+                autocomplete="off">
+
+            <button onclick="sendMessage()">
+
+                ➤
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
