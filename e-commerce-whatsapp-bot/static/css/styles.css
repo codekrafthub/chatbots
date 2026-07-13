@@ -1,0 +1,91 @@
+/*
+  styles.css — Public Page Styles
+  =================================
+  Shared across the landing page (index.html) and demo page (demo.html).
+  The admin panel has its own inline <style> block in layout.html.
+
+  Colour palette
+  ──────────────
+  Background:  #0f172a  (slate-950)
+  Surface:     #1e293b  (slate-800)
+  Border:      rgba(255,255,255,0.07)
+  Text:        #e2e8f0  (slate-200)
+  Muted:       #94a3b8  (slate-400)
+  WhatsApp:    #25D366
+*/
+
+/* ── Reset / base ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar          { width: 6px; height: 6px; }
+::-webkit-scrollbar-track    { background: #0f172a; }
+::-webkit-scrollbar-thumb    { background: #334155; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ── Typography ──────────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 { color: #f1f5f9; }
+a { color: #25D366; }
+a:hover { color: #1da851; }
+.text-green { color: #25D366 !important; }
+
+/* ── Navbar ──────────────────────────────────────────────────────────────────── */
+.navbar-dark .navbar-nav .nav-link { color: #94a3b8; transition: color .2s; }
+.navbar-dark .navbar-nav .nav-link:hover { color: #e2e8f0; }
+
+/* ── Cards ───────────────────────────────────────────────────────────────────── */
+.card {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  transition: border-color .2s, transform .2s;
+}
+.card:hover {
+  border-color: rgba(37, 211, 102, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────────── */
+.btn-wa {
+  background: #25D366;
+  color: #000;
+  font-weight: 600;
+  border: none;
+  transition: background .2s;
+}
+.btn-wa:hover { background: #1da851; color: #000; }
+
+/* ── Feature icon boxes ──────────────────────────────────────────────────────── */
+.feature-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* ── Section dividers ────────────────────────────────────────────────────────── */
+section { padding: 4rem 0; }
+section + section { border-top: 1px solid rgba(255, 255, 255, 0.05); }
+
+/* ── Code blocks ─────────────────────────────────────────────────────────────── */
+code {
+  background: rgba(255, 255, 255, 0.06);
+  color: #25D366;
+  padding: .15em .4em;
+  border-radius: 4px;
+  font-size: .85em;
+}
+
+/* ── Responsive tweaks ───────────────────────────────────────────────────────── */
+@media (max-width: 576px) {
+  section { padding: 3rem 0; }
+  h1.display-5 { font-size: 1.8rem; }
+}

@@ -1,0 +1,21 @@
+sku,name,price,category,description,in_stock,is_featured
+ELEC-001,iPhone 15 128GB,79999,Electronics,Apple iPhone 15 with A16 Bionic chip 6.1-inch Super Retina XDR display and 48MP camera.,true,true
+ELEC-002,Samsung Galaxy S24,74999,Electronics,Samsung flagship with AI-powered camera Snapdragon 8 Gen 3 and 120Hz AMOLED display.,true,true
+ELEC-003,Sony WH-1000XM5 Headphones,29990,Electronics,Industry-leading noise cancellation 30-hour battery life and premium sound quality.,true,false
+ELEC-004,Apple MacBook Air M2,114900,Electronics,Lightweight laptop with M2 chip 13.6-inch Liquid Retina display and all-day battery.,true,true
+ELEC-005,OnePlus 12R 256GB,39999,Electronics,Snapdragon 8 Gen 2 100W SUPERVOOC charging 5000mAh battery and 50MP camera.,true,false
+ELEC-006,realme Buds Air 5,3999,Electronics,Active noise cancellation 38-hour total playback low latency gaming mode.,false,false
+CLTH-001,Men Slim Fit Chinos,1499,Clothing,Cotton-blend slim fit chinos available in Navy Olive and Beige. Sizes 28-40.,true,false
+CLTH-002,Women Floral Kurti,899,Clothing,Rayon floral print A-line kurti with 3/4 sleeves. Sizes XS-3XL.,true,true
+CLTH-003,Men Casual Polo T-Shirt,699,Clothing,100% cotton pique polo with ribbed collar and cuffs. 8 colour options.,true,false
+CLTH-004,Women Formal Blazer,2999,Clothing,Polyester-viscose blend tailored blazer with notch lapels. Sizes XS-XL.,true,false
+HOME-001,Prestige Induction Cooktop,2499,Home & Kitchen,2000W induction with feather touch buttons 8 preset cooking modes and auto-off.,true,true
+HOME-002,Bajaj Mixer Grinder 750W,1899,Home & Kitchen,3 jars stainless steel blades 5-year motor warranty and overload protection.,true,false
+HOME-003,IKEA LACK Side Table,799,Home & Kitchen,Minimalist side table 55x55cm easy to assemble available in black and white.,false,false
+HOME-004,Wonderchef Non-Stick Pan Set,1299,Home & Kitchen,3-piece PFOA-free non-stick set compatible with all cooktops 2-year warranty.,true,false
+SPRT-001,Nivia Carbonite Basketball,1199,Sports & Fitness,Size 7 deep channel design rubber compound ideal for outdoor courts.,true,false
+SPRT-002,Boldfit Resistance Bands Set,599,Sports & Fitness,Set of 5 fabric bands with different resistance levels includes carry bag.,true,true
+BOOK-001,Atomic Habits by James Clear,399,Books & Stationery,International bestseller on building good habits and breaking bad ones. Paperback.,true,true
+BOOK-002,Python Crash Course 3rd Ed,749,Books & Stationery,Beginner-friendly Python programming guide with hands-on projects.,true,false
+BEAU-001,Minimalist 2% Salicylic Acid Serum,349,Beauty & Personal Care,Unclogs pores reduces blackheads and brightens skin. 30ml fragrance-free.,true,true
+BEAU-002,Dove Intense Repair Shampoo 650ml,299,Beauty & Personal Care,Keratin actives formula for dry and damaged hair sulfate-free.,true,false

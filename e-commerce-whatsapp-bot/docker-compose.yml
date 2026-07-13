@@ -1,0 +1,74 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# docker-compose.yml — Local Development Stack
+# ─────────────────────────────────────────────────────────────────────────────
+# Services:
+#   app   → Flask application (auto-reloads on code changes via volume mount)
+#
+# Usage:
+#   docker-compose up --build          # first run
+#   docker-compose up                  # subsequent runs
+#   docker-compose down                # stop and remove containers
+#   docker-compose exec app flask seed-db   # seed data
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Flask Application ─────────────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder        # use the builder stage for dev (has gcc etc.)
+    image: ecommerce-whatsapp-bot:dev
+    container_name: whatsapp_bot_app
+
+    # Override CMD to run the dev server with auto-reload
+    command: >
+      sh -c "
+        flask init-db &&
+        flask seed-db &&
+        flask run --host=0.0.0.0 --port=5000 --debug
+      "
+
+    ports:
+      - "5000:5000"
+
+    environment:
+      FLASK_ENV: development
+      FLASK_APP: run.py
+      # Database lives in the instance/ volume
+      DATABASE_URL: sqlite:///ecommerce_bot.db
+      # Override in .env or here for testing
+      SECRET_KEY: dev-secret-key-not-for-prod
+
+    # Load real secrets from .env file (git-ignored)
+    env_file:
+      - .env
+
+    volumes:
+      # Mount source code so edits are reflected without rebuild
+      - .:/app
+
+      # Persist the SQLite database between container restarts
+      - bot_instance:/app/instance
+
+      # Persist database backups
+      - bot_backups:/app/backups
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request; urllib.request.urlopen('http://localhost:5000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+
+# ── Named Volumes ─────────────────────────────────────────────────────────────
+volumes:
+  bot_instance:
+    driver: local
+  bot_backups:
+    driver: local

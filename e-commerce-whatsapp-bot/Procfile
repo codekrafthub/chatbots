@@ -1,0 +1,15 @@
+# Procfile — Heroku Process Definitions
+# =======================================
+# Heroku reads this file to know how to start the application.
+#
+# Deploy to Heroku:
+#   heroku create your-app-name
+#   heroku config:set SECRET_KEY=... TWILIO_ACCOUNT_SID=... etc.
+#   git push heroku main
+#   heroku run flask init-db
+#   heroku run flask seed-db
+#
+# The 'web' dyno must bind to $PORT (Heroku sets this automatically).
+# We pass workers=2 — a safe default for a free/basic dyno.
+
+web: gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2 --timeout 60 --access-logfile - --error-logfile -

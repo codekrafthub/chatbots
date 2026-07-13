@@ -1,0 +1,267 @@
+{% extends "admin/layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+{% endblock %}
+
+{% block content %}
+
+<!-- ── KPI Cards ──────────────────────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+
+  <div class="col-6 col-lg-2">
+    <div class="stat-card" style="background:linear-gradient(135deg,#1e3a5f,#1e293b)">
+      <i class="bi bi-people stat-icon"></i>
+      <div class="stat-value">{{ stats.total_leads }}</div>
+      <div class="stat-label">Total Leads</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-2">
+    <div class="stat-card" style="background:linear-gradient(135deg,#14532d,#1e293b)">
+      <i class="bi bi-fire stat-icon"></i>
+      <div class="stat-value">{{ stats.hot_leads }}</div>
+      <div class="stat-label">Hot Leads</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-2">
+    <div class="stat-card" style="background:linear-gradient(135deg,#312e81,#1e293b)">
+      <i class="bi bi-chat-dots stat-icon"></i>
+      <div class="stat-value">{{ stats.total_conversations }}</div>
+      <div class="stat-label">Conversations</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-2">
+    <div class="stat-card" style="background:linear-gradient(135deg,#7c2d12,#1e293b)">
+      <i class="bi bi-box-seam stat-icon"></i>
+      <div class="stat-value">{{ stats.total_orders }}</div>
+      <div class="stat-label">Orders Tracked</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-2">
+    <div class="stat-card" style="background:linear-gradient(135deg,#134e4a,#1e293b)">
+      <i class="bi bi-graph-up-arrow stat-icon"></i>
+      <div class="stat-value">{{ stats.conversion_rate }}%</div>
+      <div class="stat-label">Conversion Rate</div>
+    </div>
+  </div>
+
+  <div class="col-6 col-lg-2">
+    <div class="stat-card" style="background:linear-gradient(135deg,#4c1d95,#1e293b)">
+      <i class="bi bi-person-lines-fill stat-icon"></i>
+      <div class="stat-value">{{ stats.escalated_today }}</div>
+      <div class="stat-label">Escalated Today</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Charts Row ─────────────────────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+
+  <!-- Message Volume -->
+  <div class="col-lg-7">
+    <div class="card h-100">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-bar-chart me-2 text-primary"></i>Message Volume — Last 7 Days</h6>
+      </div>
+      <div class="card-body">
+        <canvas id="msgChart" height="120"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lead Temperature Doughnut -->
+  <div class="col-lg-5">
+    <div class="card h-100">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-pie-chart me-2 text-warning"></i>Lead Temperature</h6>
+      </div>
+      <div class="card-body d-flex align-items-center justify-content-center">
+        <canvas id="tempChart" height="180"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Lead Funnel + Top Interests ───────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+
+  <!-- Pipeline Funnel -->
+  <div class="col-lg-5">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-funnel me-2 text-success"></i>Lead Pipeline</h6>
+      </div>
+      <div class="card-body">
+        {% set funnel_total = lead_funnel.new + lead_funnel.qualified + lead_funnel.interested + lead_funnel.converted %}
+        {% for stage, count in lead_funnel.items() %}
+          {% set pct = ((count / funnel_total * 100) | round(0)) if funnel_total > 0 else 0 %}
+          {% set colors = {'new':'#3b82f6','qualified':'#f59e0b','interested':'#a855f7','converted':'#22c55e'} %}
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-capitalize small">{{ stage }}</span>
+              <span class="small fw-bold">{{ count }}</span>
+            </div>
+            <div class="progress" style="height:8px;background:#0f172a">
+              <div class="progress-bar" style="width:{{ pct }}%;background:{{ colors[stage] }};border-radius:4px"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Product Interests -->
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-stars me-2 text-warning"></i>Top Product Interests</h6>
+      </div>
+      <div class="card-body">
+        {% if top_interests %}
+          {% for item in top_interests %}
+            <div class="d-flex align-items-center mb-3 gap-3">
+              <span class="text-secondary small" style="min-width:2rem">{{ loop.index }}</span>
+              <div class="flex-grow-1">
+                <div class="small mb-1">{{ item.interest }}</div>
+                <div class="progress" style="height:6px;background:#0f172a">
+                  {% set max_count = top_interests[0].count if top_interests else 1 %}
+                  <div class="progress-bar" style="width:{{ (item.count / max_count * 100) | round(0) }}%;background:#25D366;border-radius:3px"></div>
+                </div>
+              </div>
+              <span class="badge bg-secondary">{{ item.count }}</span>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-secondary small mb-0">No product interest data yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Recent Leads Table ─────────────────────────────────────────────────── -->
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0"><i class="bi bi-people me-2 text-info"></i>Recent Leads</h6>
+    <a href="{{ url_for('admin.leads') }}" class="btn btn-sm btn-outline-secondary">View All</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>Phone</th><th>Name</th><th>Interest</th>
+          <th>Stage</th><th>Temp</th><th>Score</th><th>Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lead in recent_leads %}
+        <tr>
+          <td class="font-monospace small">{{ lead.phone_number }}</td>
+          <td>{{ lead.name or '—' }}</td>
+          <td><small>{{ lead.product_interest or '—' }}</small></td>
+          <td>
+            <span class="badge rounded-pill
+              {% if lead.stage == 'converted' %}bg-success
+              {% elif lead.stage == 'interested' %}bg-warning text-dark
+              {% elif lead.stage == 'qualified' %}bg-info text-dark
+              {% else %}bg-secondary{% endif %}">
+              {{ lead.stage }}
+            </span>
+          </td>
+          <td>
+            <span class="badge
+              {% if lead.temperature == 'HOT' %}badge-hot
+              {% elif lead.temperature == 'WARM' %}badge-warm
+              {% else %}badge-cold{% endif %}">
+              {{ lead.temperature }}
+            </span>
+          </td>
+          <td>
+            <div class="progress" style="height:6px;width:60px;background:#0f172a;display:inline-block;vertical-align:middle">
+              <div class="progress-bar" style="width:{{ lead.score }}%;background:#25D366;border-radius:3px"></div>
+            </div>
+            <small class="ms-1">{{ lead.score }}</small>
+          </td>
+          <td class="small text-secondary">{{ lead.created_at.strftime('%d %b') }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center text-secondary py-4">No leads yet — test the bot!</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// ── Shared chart defaults ────────────────────────────────────────────────────
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+const tooltipStyle = {
+  backgroundColor: '#1e293b',
+  borderColor: 'rgba(255,255,255,.1)',
+  borderWidth: 1,
+  titleColor: '#e2e8f0',
+  bodyColor: '#94a3b8',
+  padding: 10,
+};
+
+// ── Message Volume Line Chart ────────────────────────────────────────────────
+const msgData  = {{ daily_messages | tojson }};
+const msgCtx   = document.getElementById('msgChart').getContext('2d');
+new Chart(msgCtx, {
+  type: 'line',
+  data: {
+    labels: msgData.map(d => d.date),
+    datasets: [{
+      label: 'Messages',
+      data:  msgData.map(d => d.count),
+      borderColor: '#25D366',
+      backgroundColor: 'rgba(37,211,102,0.1)',
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: '#25D366',
+      pointRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false }, tooltip: tooltipStyle },
+    scales: {
+      x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+      y: { grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true },
+    }
+  }
+});
+
+// ── Lead Temperature Doughnut ────────────────────────────────────────────────
+const tempData = {{ temp_data | tojson }};
+const tempCtx  = document.getElementById('tempChart').getContext('2d');
+new Chart(tempCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Hot', 'Warm', 'Cold'],
+    datasets: [{
+      data: [tempData.HOT, tempData.WARM, tempData.COLD],
+      backgroundColor: ['#ef4444', '#f97316', '#3b82f6'],
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    cutout: '70%',
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } },
+      tooltip: tooltipStyle,
+    }
+  }
+});
+</script>
+{% endblock %}

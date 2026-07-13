@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login — Admin Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      min-height: 100vh; background: #0f172a;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .login-card {
+      width: 100%; max-width: 380px;
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px; padding: 2.5rem 2rem;
+    }
+    .brand-icon { color: #25D366; font-size: 2.5rem; }
+    .form-control {
+      background: #0f172a; border-color: rgba(255,255,255,.12);
+      color: #e2e8f0;
+    }
+    .form-control:focus {
+      background: #0f172a; border-color: #25D366;
+      color: #e2e8f0; box-shadow: 0 0 0 3px rgba(37,211,102,.15);
+    }
+    .btn-login {
+      background: #25D366; border: none; color: #000;
+      font-weight: 600; padding: .65rem;
+      transition: background .2s;
+    }
+    .btn-login:hover { background: #1da851; color: #000; }
+    .alert { font-size: .85rem; }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+  <div class="text-center mb-4">
+    <i class="bi bi-whatsapp brand-icon"></i>
+    <h4 class="mt-2 mb-0 fw-bold text-white">Admin Panel</h4>
+    <small class="text-secondary">{{ config.STORE_NAME }}</small>
+  </div>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for cat, msg in messages %}
+        <div class="alert alert-{{ 'danger' if cat == 'danger' else 'info' }} py-2">{{ msg }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <form method="POST">
+    <div class="mb-3">
+      <label class="form-label small text-secondary">Username</label>
+      <div class="input-group">
+        <span class="input-group-text bg-dark border-secondary text-secondary">
+          <i class="bi bi-person"></i>
+        </span>
+        <input type="text" name="username" class="form-control"
+               placeholder="admin" required autofocus>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label class="form-label small text-secondary">Password</label>
+      <div class="input-group">
+        <span class="input-group-text bg-dark border-secondary text-secondary">
+          <i class="bi bi-lock"></i>
+        </span>
+        <input type="password" name="password" class="form-control"
+               placeholder="••••••••" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-login w-100 rounded-3">
+      <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+    </button>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

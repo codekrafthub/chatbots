@@ -1,0 +1,149 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Makefile — Developer Shortcuts
+# ─────────────────────────────────────────────────────────────────────────────
+# Usage:
+#   make setup      → first-time project setup (venv + deps + db + seed)
+#   make run        → start the development server
+#   make test       → run all tests
+#   make lint       → run flake8 linter
+#   make reset      → wipe + recreate the database
+#   make docker-up  → start with Docker Compose
+#   make backup     → backup the SQLite database
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Python interpreter (use python3 explicitly to avoid Python 2 on some systems)
+PYTHON := python3
+VENV   := .venv
+PIP    := $(VENV)/bin/pip
+FLASK  := $(VENV)/bin/flask
+PYTEST := $(VENV)/bin/pytest
+
+.DEFAULT_GOAL := help
+
+# ── Help ──────────────────────────────────────────────────────────────────────
+.PHONY: help
+help:
+	@echo ""
+	@echo "  E-Commerce WhatsApp Bot — Developer Commands"
+	@echo "  ─────────────────────────────────────────────"
+	@echo "  make setup       First-time setup (venv + deps + db + seed)"
+	@echo "  make run         Start development server on :5000"
+	@echo "  make test        Run pytest suite"
+	@echo "  make test-v      Run pytest with verbose output"
+	@echo "  make coverage    Run tests with HTML coverage report"
+	@echo "  make lint        Run flake8 linter"
+	@echo "  make reset       Drop + recreate + re-seed the database"
+	@echo "  make backup      Backup the SQLite database"
+	@echo "  make import-csv  Import/update data from CSV files"
+	@echo "  make docker-up   Start with Docker Compose (detached)"
+	@echo "  make docker-down Stop Docker Compose containers"
+	@echo "  make docker-logs Follow Docker Compose logs"
+	@echo "  make clean       Remove .pyc files and __pycache__"
+	@echo ""
+
+
+# ── Setup ─────────────────────────────────────────────────────────────────────
+.PHONY: setup
+setup: venv install init-db seed-db
+	@echo ""
+	@echo "✅ Setup complete. Run 'make run' to start the server."
+
+.PHONY: venv
+venv:
+	@echo "→ Creating virtual environment..."
+	$(PYTHON) -m venv $(VENV)
+	$(PIP) install --upgrade pip
+
+.PHONY: install
+install:
+	@echo "→ Installing dependencies..."
+	$(PIP) install -r requirements.txt
+
+.PHONY: init-db
+init-db:
+	@echo "→ Initialising database..."
+	FLASK_APP=run.py $(FLASK) init-db
+
+.PHONY: seed-db
+seed-db:
+	@echo "→ Seeding database with demo data..."
+	FLASK_APP=run.py $(FLASK) seed-db
+
+
+# ── Development Server ────────────────────────────────────────────────────────
+.PHONY: run
+run:
+	@echo "→ Starting development server at http://localhost:5000"
+	FLASK_APP=run.py FLASK_ENV=development $(FLASK) run --debug --host=0.0.0.0 --port=5000
+
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+.PHONY: test
+test:
+	$(PYTEST) tests/ -q
+
+.PHONY: test-v
+test-v:
+	$(PYTEST) tests/ -v
+
+.PHONY: coverage
+coverage:
+	$(PYTEST) tests/ --cov=app --cov=models --cov-report=html --cov-report=term-missing
+	@echo "→ HTML report: htmlcov/index.html"
+
+
+# ── Linting ───────────────────────────────────────────────────────────────────
+.PHONY: lint
+lint:
+	$(VENV)/bin/flake8 app/ models.py config.py cli.py \
+	    --max-line-length=100 \
+	    --ignore=E501,W503
+
+
+# ── Database Management ───────────────────────────────────────────────────────
+.PHONY: reset
+reset:
+	@echo "→ Dropping all tables..."
+	FLASK_APP=run.py $(FLASK) drop-db --yes
+	@echo "→ Recreating tables..."
+	FLASK_APP=run.py $(FLASK) init-db
+	@echo "→ Re-seeding data..."
+	FLASK_APP=run.py $(FLASK) seed-db
+	@echo "✅ Database reset complete."
+
+.PHONY: backup
+backup:
+	@echo "→ Backing up SQLite database..."
+	$(PYTHON) scripts/backup_sqlite.py
+
+.PHONY: import-csv
+import-csv:
+	@echo "→ Importing CSV data into database..."
+	$(PYTHON) scripts/import_csv.py --table all
+
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+.PHONY: docker-up
+docker-up:
+	docker-compose up --build -d
+	@echo "✅ Running at http://localhost:5000"
+
+.PHONY: docker-down
+docker-down:
+	docker-compose down
+
+.PHONY: docker-logs
+docker-logs:
+	docker-compose logs -f app
+
+
+# ── Cleanup ───────────────────────────────────────────────────────────────────
+.PHONY: clean
+clean:
+	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	find . -name "*.pyc"   -delete 2>/dev/null || true
+	find . -name "*.pyo"   -delete 2>/dev/null || true
+	find . -name ".coverage" -delete 2>/dev/null || true
+	rm -rf htmlcov/ .pytest_cache/ 2>/dev/null || true
+	@echo "✅ Cleaned."
+	

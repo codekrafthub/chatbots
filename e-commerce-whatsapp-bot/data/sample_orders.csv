@@ -1,0 +1,16 @@
+order_id,customer_name,customer_phone,product_name,status,amount,estimated_delivery
+ORD-001,Rahul Sharma,+919876543210,iPhone 15 128GB,Delivered,79999,Delivered on 18 Jun 2026
+ORD-002,Priya Patel,+918765432109,Samsung Galaxy S24,Shipped,74999,22 Jun 2026
+ORD-003,Amit Kumar,+917654321098,Atomic Habits Paperback,Out for Delivery,399,Today by 9 PM
+ORD-004,Sneha Gupta,+916543210987,Boldfit Resistance Bands Set,Confirmed,599,24 Jun 2026
+ORD-005,Vikram Singh,+915432109876,Apple MacBook Air M2,Processing,114900,26 Jun 2026
+ORD-006,Anjali Mehta,+914321098765,Minimalist Salicylic Acid Serum,Delivered,349,Delivered on 15 Jun 2026
+ORD-007,Rohan Verma,+913210987654,Sony WH-1000XM5 Headphones,Shipped,29990,23 Jun 2026
+ORD-008,Deepika Nair,+912109876543,Women Floral Kurti,Cancelled,899,Cancelled
+ORD-009,Karan Malhotra,+911098765432,Prestige Induction Cooktop,Processing,2499,27 Jun 2026
+ORD-010,Pooja Iyer,+910987654321,Python Crash Course 3rd Ed,Confirmed,749,25 Jun 2026
+ORD-011,Arjun Reddy,+919111222333,OnePlus 12R 256GB,Shipped,39999,23 Jun 2026
+ORD-012,Meera Joshi,+919222333444,Wonderchef Non-Stick Pan Set,Delivered,1299,Delivered on 20 Jun 2026
+ORD-013,Siddharth Rao,+919333444555,Men Slim Fit Chinos,Out for Delivery,1499,Today by 8 PM
+ORD-014,Kavya Nambiar,+919444555666,Dove Intense Repair Shampoo 650ml,Processing,299,28 Jun 2026
+ORD-015,Nikhil Saxena,+919555666777,Bajaj Mixer Grinder 750W,Confirmed,1899,25 Jun 2026

@@ -1,0 +1,93 @@
+{% extends "admin/layout.html" %}
+{% block title %}Orders{% endblock %}
+{% block page_title %}Order Tracking{% endblock %}
+
+{% block content %}
+
+<!-- ── Status filter tabs ──────────────────────────────────────────────────── -->
+<div class="d-flex gap-2 mb-4 flex-wrap">
+  <a href="{{ url_for('admin.orders') }}"
+     class="btn btn-sm {{ 'btn-light' if not filter_status else 'btn-outline-secondary' }}">
+    All
+  </a>
+  {% for status in ['Processing','Confirmed','Shipped','Out for Delivery','Delivered','Cancelled'] %}
+    <a href="?status={{ status }}"
+       class="btn btn-sm {{ 'btn-light' if filter_status == status else 'btn-outline-secondary' }}">
+      {{ status }}
+    </a>
+  {% endfor %}
+</div>
+
+<!-- ── Orders Table ───────────────────────────────────────────────────────── -->
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Phone</th>
+          <th>Product</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Est. Delivery</th>
+          <th>Created</th>
+          <th>Update Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td class="font-monospace fw-bold">{{ order.order_id }}</td>
+          <td>{{ order.customer_name or '—' }}</td>
+          <td class="font-monospace small text-secondary">{{ order.customer_phone or '—' }}</td>
+          <td class="small">{{ order.product_name }}</td>
+          <td>₹{{ '{:,.0f}'.format(order.amount) }}</td>
+
+          <!-- Status badge -->
+          <td>
+            {% set badge_map = {
+              'Processing':      'bg-secondary',
+              'Confirmed':       'bg-info text-dark',
+              'Shipped':         'bg-primary',
+              'Out for Delivery':'bg-warning text-dark',
+              'Delivered':       'bg-success',
+              'Cancelled':       'bg-danger',
+            } %}
+            <span class="badge {{ badge_map.get(order.status, 'bg-secondary') }}">
+              {{ order.status }}
+            </span>
+          </td>
+
+          <td class="small">{{ order.estimated_delivery or '—' }}</td>
+          <td class="small text-secondary">{{ order.created_at.strftime('%d %b %Y') }}</td>
+
+          <!-- Inline status update form -->
+          <td>
+            <form method="POST"
+                  action="{{ url_for('admin.update_order_status', order_id=order.id) }}"
+                  class="d-flex gap-1">
+              <select name="status" class="form-select form-select-sm bg-dark text-white border-secondary"
+                      style="min-width:130px">
+                {% for s in ['Processing','Confirmed','Shipped','Out for Delivery','Delivered','Cancelled'] %}
+                  <option value="{{ s }}" {% if order.status == s %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+              </select>
+              <button type="submit" class="btn btn-sm btn-success">✓</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="9" class="text-center text-secondary py-5">
+            <i class="bi bi-box-seam d-block mb-2" style="font-size:2rem;opacity:.3"></i>
+            No orders found.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

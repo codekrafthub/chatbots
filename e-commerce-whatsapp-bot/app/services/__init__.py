@@ -1,0 +1,1 @@
+"""app/services — Business logic: bot FSM, lead capture, FAQ, orders, catalogue, analytics."""

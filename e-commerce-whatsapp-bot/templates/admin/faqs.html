@@ -1,0 +1,68 @@
+{% extends "admin/layout.html" %}
+{% block title %}FAQs{% endblock %}
+{% block page_title %}FAQs{% endblock %}
+
+{% block content %}
+
+<!-- Group FAQs by category for display -->
+{% set categories = faqs | map(attribute='category') | unique | list %}
+
+{% if not faqs %}
+<div class="card">
+  <div class="card-body text-center text-secondary py-5">
+    <i class="bi bi-question-circle d-block mb-2" style="font-size:2.5rem;opacity:.3"></i>
+    No FAQs yet. Run <code>flask seed-db</code> to load sample FAQs.
+  </div>
+</div>
+{% endif %}
+
+{% for category in categories %}
+  {% set cat_faqs = faqs | selectattr('category', 'eq', category) | list %}
+  <div class="card mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="mb-0">
+        <i class="bi bi-tag me-2 text-success"></i>{{ category }}
+        <span class="badge bg-secondary ms-2">{{ cat_faqs | length }}</span>
+      </h6>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th style="width:35%">Question</th>
+            <th>Answer</th>
+            <th style="width:20%">Keywords</th>
+            <th style="width:60px">Priority</th>
+            <th style="width:60px"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for faq in cat_faqs %}
+          <tr>
+            <td class="small fw-semibold align-top">{{ faq.question }}</td>
+            <td class="small text-secondary align-top" style="white-space:pre-wrap">{{ faq.answer }}</td>
+            <td class="align-top">
+              {% for kw in faq.keyword_list %}
+                <span class="badge bg-dark border border-secondary me-1 mb-1">{{ kw }}</span>
+              {% endfor %}
+            </td>
+            <td class="align-top text-center">
+              <span class="badge bg-secondary">{{ faq.priority }}</span>
+            </td>
+            <td class="align-top">
+              <form method="POST" action="{{ url_for('admin.delete_faq', faq_id=faq.id) }}"
+                    onsubmit="return confirm('Delete this FAQ?')">
+                <button type="submit" class="btn btn-sm btn-outline-danger py-0">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}

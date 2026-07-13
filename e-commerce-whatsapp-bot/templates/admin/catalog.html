@@ -1,0 +1,63 @@
+{% extends "admin/layout.html" %}
+{% block title %}Catalogue{% endblock %}
+{% block page_title %}Product Catalogue{% endblock %}
+
+{% block content %}
+
+<!-- ── Category filter ────────────────────────────────────────────────────── -->
+<div class="d-flex gap-2 mb-4 flex-wrap align-items-center">
+  <a href="{{ url_for('admin.catalog') }}"
+     class="btn btn-sm {{ 'btn-light' if not filter_category else 'btn-outline-secondary' }}">
+    All Categories
+  </a>
+  {% for cat in categories %}
+    <a href="?category={{ cat.id }}"
+       class="btn btn-sm {{ 'btn-light' if filter_category == cat.id else 'btn-outline-secondary' }}">
+      {{ cat.emoji }} {{ cat.name }}
+    </a>
+  {% endfor %}
+  <span class="ms-auto text-secondary small">{{ products | length }} product{{ 's' if products|length != 1 }}</span>
+</div>
+
+<!-- ── Product Grid ───────────────────────────────────────────────────────── -->
+<div class="row g-3">
+  {% for product in products %}
+  <div class="col-sm-6 col-lg-4 col-xl-3">
+    <div class="card h-100" style="border-color:{% if product.is_featured %}rgba(37,211,102,.3){% else %}rgba(255,255,255,.07){% endif %}">
+      <!-- Product image placeholder / featured badge -->
+      <div class="position-relative" style="height:120px;background:#0f172a;border-radius:12px 12px 0 0;
+           display:flex;align-items:center;justify-content:center">
+        <i class="bi bi-box" style="font-size:2.5rem;opacity:.2"></i>
+        {% if product.is_featured %}
+          <span class="badge position-absolute top-0 start-0 m-2"
+                style="background:#25D366;color:#000">⭐ Featured</span>
+        {% endif %}
+        {% if not product.in_stock %}
+          <span class="badge bg-danger position-absolute top-0 end-0 m-2">Out of Stock</span>
+        {% endif %}
+      </div>
+
+      <div class="card-body d-flex flex-column">
+        <div class="small text-secondary mb-1">
+          {% if product.category %}{{ product.category.emoji }} {{ product.category.name }}{% endif %}
+        </div>
+        <h6 class="card-title mb-1" style="font-size:.9rem">{{ product.name }}</h6>
+        <p class="small text-secondary flex-grow-1" style="font-size:.78rem">
+          {{ (product.description or '')[:80] }}{% if product.description and product.description|length > 80 %}…{% endif %}
+        </p>
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <span class="fw-bold" style="color:#25D366">₹{{ '{:,.0f}'.format(product.price) }}</span>
+          <code class="small text-secondary">{{ product.sku }}</code>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="col-12 text-center text-secondary py-5">
+    <i class="bi bi-tags d-block mb-2" style="font-size:2.5rem;opacity:.3"></i>
+    No products found. Seed the database with <code>flask seed-db</code>.
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

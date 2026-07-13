@@ -1,0 +1,93 @@
+{% extends "admin/layout.html" %}
+{% block title %}Conversations{% endblock %}
+{% block page_title %}Conversations{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="mb-0"><i class="bi bi-chat-dots me-2"></i>All WhatsApp Conversations</h6>
+    <span class="text-secondary small">{{ conversations.total }} total</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Phone</th>
+          <th>Channel</th>
+          <th>State</th>
+          <th>Messages</th>
+          <th>Status</th>
+          <th>Last Active</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for conv in conversations.items %}
+        <tr>
+          <td class="text-secondary small">{{ conv.id }}</td>
+          <td class="font-monospace small">{{ conv.phone_number }}</td>
+          <td>
+            <span class="badge bg-secondary text-uppercase">{{ conv.channel }}</span>
+          </td>
+          <td><code class="small">{{ conv.state }}</code></td>
+          <td>{{ conv.message_count }}</td>
+          <td>
+            {% if conv.is_escalated %}
+              <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle me-1"></i>Escalated</span>
+            {% elif conv.is_active %}
+              <span class="badge bg-success">Active</span>
+            {% else %}
+              <span class="badge bg-secondary">Closed</span>
+            {% endif %}
+          </td>
+          <td class="small text-secondary">{{ conv.updated_at.strftime('%d %b %H:%M') }}</td>
+          <td>
+            <a href="{{ url_for('admin.conversation_detail', conv_id=conv.id) }}"
+               class="btn btn-sm btn-outline-secondary py-0">
+              <i class="bi bi-eye"></i>
+            </a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="8" class="text-center text-secondary py-5">
+            <i class="bi bi-chat-dots d-block mb-2" style="font-size:2rem;opacity:.3"></i>
+            No conversations yet.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  {% if conversations.pages > 1 %}
+  <div class="card-footer border-top border-secondary d-flex justify-content-center py-2">
+    <nav>
+      <ul class="pagination pagination-sm mb-0">
+        {% if conversations.has_prev %}
+          <li class="page-item">
+            <a class="page-link bg-dark border-secondary text-white"
+               href="?page={{ conversations.prev_num }}">‹ Prev</a>
+          </li>
+        {% endif %}
+        <li class="page-item disabled">
+          <span class="page-link bg-dark border-secondary text-secondary">
+            Page {{ conversations.page }} of {{ conversations.pages }}
+          </span>
+        </li>
+        {% if conversations.has_next %}
+          <li class="page-item">
+            <a class="page-link bg-dark border-secondary text-white"
+               href="?page={{ conversations.next_num }}">Next ›</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

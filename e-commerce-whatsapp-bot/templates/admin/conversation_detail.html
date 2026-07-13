@@ -1,0 +1,143 @@
+{% extends "admin/layout.html" %}
+{% block title %}Chat #{{ conversation.id }}{% endblock %}
+{% block page_title %}Chat #{{ conversation.id }}{% endblock %}
+
+{% block content %}
+<div class="row g-3">
+
+  <!-- ── Chat transcript ────────────────────────────────────────────────── -->
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header py-3 d-flex align-items-center gap-3">
+        <div class="bg-success rounded-circle d-flex align-items-center justify-content-center"
+             style="width:40px;height:40px;flex-shrink:0">
+          <i class="bi bi-person-fill text-white"></i>
+        </div>
+        <div>
+          <div class="fw-semibold">{{ conversation.phone_number }}</div>
+          <small class="text-secondary">
+            {{ conversation.channel | upper }} ·
+            {{ conversation.message_count }} messages ·
+            Started {{ conversation.created_at.strftime('%d %b %Y %H:%M') }}
+          </small>
+        </div>
+        {% if conversation.is_escalated %}
+          <span class="badge bg-warning text-dark ms-auto">
+            <i class="bi bi-exclamation-triangle me-1"></i>Escalated
+          </span>
+        {% endif %}
+      </div>
+
+      <!-- Messages -->
+      <div class="card-body p-3" style="max-height:62vh;overflow-y:auto" id="chatScroll">
+        {% for msg in messages %}
+          <div class="bubble-wrap {{ 'out' if msg.direction == 'out' else 'in' }}">
+            <div>
+              <div class="bubble {{ 'bubble-out' if msg.direction == 'out' else 'bubble-in' }}">
+                {{ msg.content }}
+              </div>
+              <div class="bubble-time {{ 'text-end' if msg.direction == 'out' else '' }}">
+                {{ '🤖 Bot' if msg.direction == 'out' else '👤 User' }}
+                · {{ msg.created_at.strftime('%H:%M') }}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <p class="text-center text-secondary py-4">No messages in this conversation.</p>
+        {% endfor %}
+      </div>
+
+      <div class="card-footer border-top border-secondary py-2">
+        <small class="text-secondary">
+          Current FSM state: <code>{{ conversation.state }}</code>
+        </small>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Lead info panel ───────────────────────────────────────────────── -->
+  <div class="col-lg-4">
+    {% if lead %}
+    <div class="card mb-3">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-person me-2"></i>Lead Details</h6>
+      </div>
+      <div class="card-body">
+        <dl class="row mb-0 small">
+          <dt class="col-5 text-secondary">Name</dt>
+          <dd class="col-7">{{ lead.name or '—' }}</dd>
+
+          <dt class="col-5 text-secondary">Email</dt>
+          <dd class="col-7">{{ lead.email or '—' }}</dd>
+
+          <dt class="col-5 text-secondary">Phone</dt>
+          <dd class="col-7 font-monospace">{{ lead.phone_number }}</dd>
+
+          <dt class="col-5 text-secondary">Interest</dt>
+          <dd class="col-7">{{ lead.product_interest or '—' }}</dd>
+
+          <dt class="col-5 text-secondary">Stage</dt>
+          <dd class="col-7">
+            <span class="badge
+              {% if lead.stage == 'converted'  %}bg-success
+              {% elif lead.stage == 'interested' %}bg-warning text-dark
+              {% elif lead.stage == 'qualified'  %}bg-info text-dark
+              {% else %}bg-secondary{% endif %}">
+              {{ lead.stage }}
+            </span>
+          </dd>
+
+          <dt class="col-5 text-secondary">Temp</dt>
+          <dd class="col-7">
+            <span class="badge
+              {% if lead.temperature == 'HOT' %}badge-hot
+              {% elif lead.temperature == 'WARM' %}badge-warm
+              {% else %}badge-cold{% endif %}">
+              {{ lead.temperature }}
+            </span>
+          </dd>
+
+          <dt class="col-5 text-secondary">Score</dt>
+          <dd class="col-7">
+            <div class="progress" style="height:6px;background:#0f172a">
+              <div class="progress-bar" style="width:{{ lead.score }}%;background:#25D366"></div>
+            </div>
+            <small>{{ lead.score }}/100</small>
+          </dd>
+        </dl>
+
+        {% if lead.notes %}
+        <hr class="border-secondary">
+        <p class="small text-secondary mb-0"><strong>Notes:</strong> {{ lead.notes }}</p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Quick Actions -->
+    <div class="card">
+      <div class="card-header py-3">
+        <h6 class="mb-0"><i class="bi bi-lightning me-2"></i>Actions</h6>
+      </div>
+      <div class="card-body d-grid gap-2">
+        <a href="{{ url_for('admin.leads', search=conversation.phone_number) }}"
+           class="btn btn-sm btn-outline-info">
+          <i class="bi bi-search me-1"></i>View All Leads for This Number
+        </a>
+        <a href="{{ url_for('admin.conversations') }}" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-arrow-left me-1"></i>Back to Conversations
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Auto-scroll chat to bottom on load
+  const chat = document.getElementById('chatScroll');
+  if (chat) chat.scrollTop = chat.scrollHeight;
+</script>
+{% endblock %}
