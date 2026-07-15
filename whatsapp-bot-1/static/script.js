@@ -1,5 +1,6 @@
 const chatBox = document.getElementById("chat-box");
 const input = document.getElementById("user-input");
+const sendBtn = document.getElementById("send-btn");
 
 function getCurrentTime() {
 
@@ -18,26 +19,21 @@ function getCurrentTime() {
     return `${hours}:${minutes} ${ampm}`;
 }
 
-function scrollToBottom() {
+function appendMessage(text, cls) {
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+    const div = document.createElement("div");
 
-}
+    div.className = cls;
 
-function appendMessage(text, className) {
-
-    const message = document.createElement("div");
-
-    message.className = className;
-
-    message.innerHTML = `
+    div.innerHTML =
+    `
         ${text}
         <span class="time">${getCurrentTime()}</span>
     `;
 
-    chatBox.appendChild(message);
+    chatBox.appendChild(div);
 
-    scrollToBottom();
+    chatBox.scrollTop = chatBox.scrollHeight;
 
 }
 
@@ -45,87 +41,80 @@ async function sendMessage() {
 
     const message = input.value.trim();
 
-    if (message === "") {
+    if(message === "") return;
 
-        input.focus();
-        return;
+    appendMessage(message,"user-message");
 
-    }
+    input.value="";
 
-    appendMessage("👤 " + message, "user-message");
+    sendBtn.innerHTML="⏳";
 
-    input.value = "";
+    const typing=document.createElement("div");
 
-    input.focus();
+    typing.className="bot-message";
 
-    const typing = document.createElement("div");
+    typing.id="typing";
 
-    typing.className = "bot-message typing";
-
-    typing.id = "typing";
-
-    typing.innerHTML = `
-        🏥 Typing...
+    typing.innerHTML=
+    `
+        Typing...
+        <span class="time">${getCurrentTime()}</span>
     `;
 
     chatBox.appendChild(typing);
 
-    scrollToBottom();
+    chatBox.scrollTop=chatBox.scrollHeight;
 
-    try {
+    try{
 
-        const response = await fetch("/chat", {
+        const response=await fetch("/chat",{
 
-            method: "POST",
+            method:"POST",
 
-            headers: {
-
-                "Content-Type": "application/json"
-
+            headers:{
+                "Content-Type":"application/json"
             },
 
-            body: JSON.stringify({
-
-                message: message
-
+            body:JSON.stringify({
+                message:message
             })
 
         });
 
-        const data = await response.json();
+        const data=await response.json();
 
         typing.remove();
 
-        appendMessage("🏥 " + data.reply, "bot-message");
+        appendMessage(data.reply,"bot-message");
 
     }
 
-    catch (error) {
+    catch(error){
 
         typing.remove();
 
         appendMessage(
-            "🏥 Server error. Please try again.",
+            "Unable to connect to server.",
             "bot-message"
         );
 
-        console.error(error);
-
     }
+
+    sendBtn.innerHTML="🎤";
 
 }
 
-function quickMessage(message) {
+function quickMessage(message){
 
-    input.value = message;
+    input.value=message;
 
     sendMessage();
 
 }
 
-input.addEventListener("keypress", function(event){
+input.addEventListener("keypress",function(event){
 
-    if(event.key === "Enter"){
+    if(event.key==="Enter"){
 
         sendMessage();
 
@@ -133,7 +122,9 @@ input.addEventListener("keypress", function(event){
 
 });
 
-window.onload = function(){
+window.onload=function(){
+
+    chatBox.scrollTop=chatBox.scrollHeight;
 
     input.focus();
 

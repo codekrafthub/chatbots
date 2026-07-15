@@ -1,203 +1,229 @@
-# [Project Name] — WhatsApp Chatbot
+# Government Hospital Assistant — WhatsApp Chatbot
 
-> **Client:** [Anonymized — e.g. "Real Estate Client, Raipur"]  
-> **Built by:** Rohit/Devansh  
+> **Client:** Government Hospital (Demo Project)  
+> **Built by:** Jyotiraditya Singh  
 > **Mentor:** Kapil & Apratim  
-> **Timeline:** Week X – Week Y  
-> **Status:** 🔵 In Progress / ✅ Delivered
+> **Timeline:** Summer Internship 2026  
+> **Status:** ✅ Delivered
 
 ---
 
-## Problem Statement
+# Problem Statement
 
-*1–2 sentences: What was the client's problem? What were they doing manually that this bot replaces?*
-
-Example: "Client was handling 50+ daily WhatsApp inquiries manually. Response time was 3–4 hours. Lead data was being lost."
+Government hospitals receive many repetitive patient queries such as OPD timings, emergency services, department information, laboratory details, blood bank availability, Ayushman Bharat information, and contact details. Responding manually takes time and increases staff workload.
 
 ---
 
-## Solution Overview
+# Solution Overview
 
-*What does this bot do? List the core flows.*
+This chatbot automates common hospital-related queries through both a website interface and WhatsApp.
 
-- Greets new users and qualifies them (name, requirement, budget)
-- Captures lead data to a Google Sheet / database
-- Sends confirmation message + follow-up after 24 hrs
-- Escalates to human agent on keyword trigger ("speak to agent")
+Features:
+
+- Greeting new users
+- OPD timings
+- Emergency information
+- Department lookup
+- Laboratory information
+- Blood Bank information
+- Ayushman Bharat information
+- Contact information
+- Website chatbot support
+- WhatsApp chatbot support using Twilio Sandbox
 
 ---
 
-## Architecture
+# Architecture
 
 ```
-User (WhatsApp)
-    ↓
-Meta WhatsApp Business API
-    ↓
-Webhook → Flask App (this repo)
-    ↓
-[Business Logic Layer]
-    ↓
-Database (SQLite/PostgreSQL) + [Optional: Google Sheets / CRM]
+                    WhatsApp User
+                          │
+                          ▼
+                 Twilio WhatsApp Sandbox
+                          │
+                          ▼
+                    FastAPI Backend
+                      (main.py)
+                          │
+        ┌─────────────────┼──────────────────┐
+        │                 │                  │
+        ▼                 ▼                  ▼
+ Intent Detection   hospital_data.json   Website UI
+                          │
+                          ▼
+                 Response Generation
+                          │
+            ┌─────────────┴─────────────┐
+            ▼                           ▼
+     WhatsApp Response          Website Response
 ```
 
-*(Add a proper diagram in `../docs/architecture/bot-1-architecture.png` and link it here)*
+Architecture Diagram:
+
+`docs/architecture/bot-1-architecture.png`
 
 ---
 
-## Tech Stack
+# Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
-| Language | Python 3.10+ |
-| Framework | Flask |
-| Database | SQLite (dev) / PostgreSQL (prod) |
-| Hosting | [e.g. Railway / DigitalOcean / VPS] |
-| Webhook Tunnel (dev) | Ngrok |
-| WhatsApp API | Meta Cloud API |
+|--------|------------|
+| Language | Python 3 |
+| Framework | FastAPI |
+| Frontend | HTML, CSS, JavaScript |
+| Data Storage | JSON (`hospital_data.json`) |
+| WhatsApp API | Twilio WhatsApp Sandbox |
+| Webhook Testing | Ngrok |
 
 ---
 
-## Local Setup
+# Local Setup
 
-### Prerequisites
+## Prerequisites
+
 - Python 3.10+
-- Ngrok account (free tier works)
-- Meta Developer account with WhatsApp Business API access
+- Twilio Account
+- Ngrok
+- Git
 
-### Steps
+---
+
+## Installation
 
 ```bash
-# 1. Navigate to this project
+git clone <repository-url>
+
 cd whatsapp-bot-1
 
-# 2. Create virtual environment
 python -m venv .venv
-source .venv/bin/activate    # Mac/Linux
-.venv\Scripts\activate       # Windows
 
-# 3. Install dependencies
+# Windows
+.venv\Scripts\activate
+
 pip install -r requirements.txt
-
-# 4. Set up environment variables
-cp .env.example .env
-# Fill in actual values in .env (get credentials mentors if required)
-
-# 5. Run the app
-python app.py
-
-# 6. In a new terminal — expose localhost via ngrok
-ngrok http 5000
-
-# 7. Copy the ngrok URL and set it as your webhook in Meta Developer Console
-# Webhook URL: https://your-ngrok-url.ngrok.io/webhook
-# Verify Token: (use the value from your .env)
 ```
 
 ---
 
-## Environment Variables
+## Run the Project
 
-See `.env.example` for all required variables. Never commit `.env`.
-
+```bash
+uvicorn main:app --reload
 ```
-WHATSAPP_TOKEN=          # Meta API access token
-VERIFY_TOKEN=            # Your custom webhook verify token
-PHONE_NUMBER_ID=         # WhatsApp Business phone number ID
-DATABASE_URL=            # SQLite path or PostgreSQL connection string
+
+or
+
+```bash
+python main.py
 ```
 
 ---
 
-## Project Structure
+## Expose Localhost
+
+```bash
+ngrok http 8000
+```
+
+Copy the HTTPS URL and configure it as the Twilio WhatsApp Sandbox webhook.
+
+---
+
+# Environment Variables
+
+Create a `.env` file using `.env.example`.
+
+Example:
+
+```
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_WHATSAPP_NUMBER=
+NGROK_URL=
+```
+
+Do not commit `.env`.
+
+---
+
+# Project Structure
 
 ```
 whatsapp-bot-1/
 │
-├── app.py                  # Flask app entry point + webhook handler
-├── requirements.txt        # Pinned dependencies
-├── .env.example            # Environment variable template
+├── docs/
+│   └── architecture/
+│       ├── architecture.md
+│       └── bot-1-architecture.png
 │
-├── handlers/
-│   ├── message_handler.py  # Routes incoming messages to correct flow
-│   ├── lead_flow.py        # Lead capture conversation logic
-│   └── escalation.py       # Human handoff logic
+├── static/
+│   ├── style.css
+│   └── script.js
 │
-├── models/
-│   └── lead.py             # Database model for leads
+├── templates/
+│   └── index.html
 │
-├── utils/
-│   ├── whatsapp_api.py     # WhatsApp API wrapper (send message, etc.)
-│   └── db.py               # Database connection helpers
-│
-├── tests/
-│   ├── test_webhook.py     # Webhook verification tests
-│   └── test_flows.py       # Conversation flow unit tests
-│
-└── docs/
-    └── conversation-flow.md  # Decision tree / flow diagram
+├── hospital_data.json
+├── main.py
+├── requirements.txt
+├── README.md
+└── .env.example
 ```
 
 ---
 
-## Deployment
+# Deployment
 
-### Staging
-```bash
-# [Document your staging server steps here]
-# e.g. push to Railway, or SSH to VPS
-```
+## Development
 
-### Production
-```bash
-# [Document production deployment steps here]
-# Include: server, process manager (gunicorn/systemd), reverse proxy (nginx)
-```
-
-**Checklist before going live:**
-- [ ] All tests passing (`pytest`)
-- [ ] `.env` set on server (not committed)
-- [ ] Webhook URL updated in Meta Console to production URL
-- [ ] Database backed up
-- [ ] Client tested on staging and approved
-- [ ] Gunicorn running (not Flask dev server)
+- Run FastAPI locally.
+- Expose localhost using Ngrok.
+- Configure the Ngrok URL in Twilio Sandbox.
 
 ---
 
-## Testing
+# Testing
 
-```bash
-# Run all tests
-pytest
+The following features were tested successfully on both Website and WhatsApp.
 
-# Run with coverage
-pytest --cov=. --cov-report=term-missing
-```
-
----
-
-## Known Issues / Limitations
-
-*(Document honestly — this helps future interns)*
-
-- [ ] Issue 1
-- [ ] Issue 2
+- Website Chat
+- WhatsApp Chat
+- OPD Timings
+- Emergency
+- Cardiology
+- Orthopedics
+- Laboratory
+- Blood Bank
+- Ayushman Bharat
+- Contact Information
 
 ---
 
-## Lessons Learned
+# Known Limitations
 
-*(Fill this out at project end — it becomes part of your case study)*
-
-- What was harder than expected?
-- What would you do differently?
-- What pattern will you reuse in Bot #2?
+- Uses static JSON data.
+- Twilio Sandbox is intended for development only.
+- No database integration.
+- No user authentication.
 
 ---
 
-## Links
+# Lessons Learned
 
-- 📄 Case Study: `../docs/case-studies/bot-1-case-study.md`
-- 🏗️ Architecture Diagram: `../docs/architecture/bot-1-architecture.png`
-- 📝 Blog Post: [Link to published post]
-- 🔗 LinkedIn Post: [Link]
+- Integrating FastAPI with Twilio Webhooks.
+- Building a responsive chatbot interface.
+- Handling hospital information using structured JSON.
+- Testing APIs using Ngrok.
+- Deploying and validating webhook-based applications.
+
+---
+
+# Links
+
+🏗️ Architecture Documentation
+
+`docs/architecture/architecture.md`
+
+🏗️ Architecture Diagram
+
+`docs/architecture/bot-1-architecture.png`
