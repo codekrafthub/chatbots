@@ -166,7 +166,7 @@ def conversations():
         .order_by(Conversation.updated_at.desc())
         .paginate(page=page, per_page=20, error_out=False)
     )
-    return render_template("admin/conversations.html", conversations=convs)
+    return render_template("admin/conversation.html", conversations=convs)
 
 
 @admin_bp.get("/conversations/<int:conv_id>")

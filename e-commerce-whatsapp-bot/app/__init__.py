@@ -13,6 +13,7 @@ Call order:
  
 import os
 from flask import Flask
+from werkzeug.middleware.proxy_fix import ProxyFix
 from config import config_map
 from extensions import db, migrate, login_manager
  
@@ -40,6 +41,12 @@ def create_app(env: str = None) -> Flask:
  
     # ── Load config object ────────────────────────────────────────────────────
     app.config.from_object(config_map.get(env, config_map["default"]))
+
+    # ── Trust reverse-proxy headers (ngrok, Render, Heroku, Nginx, etc.) ──────
+    # Without this, request.url reports "http://" even when the real public
+    # request came in over "https://", which breaks Twilio signature checks
+    # and any redirect/URL building that assumes the real scheme.
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
  
     # ── Initialise extensions (binds them to this app instance) ──────────────
     db.init_app(app)

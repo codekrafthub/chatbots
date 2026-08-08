@@ -54,7 +54,7 @@ class S:
 
 # ─── Public entry point ───────────────────────────────────────────────────────
 
-def handle_message(phone: str, text: str, channel: str = "twilio") -> str:
+def handle_message(phone: str, text: str, channel: str) -> str:
     """
     Process one incoming WhatsApp message and return the bot's reply.
 
@@ -75,12 +75,13 @@ def handle_message(phone: str, text: str, channel: str = "twilio") -> str:
     # ── Log inbound message ───────────────────────────────────────────────────
     _log_message(conv, direction="in", content=text)
 
-    # ── Route to the correct FSM handler ─────────────────────────────────────
-    reply = _route(conv, lead, text)
-
-    # ── Log outbound reply + persist ─────────────────────────────────────────
-    _log_message(conv, direction="out", content=reply)
-    db.session.commit()
+    try:
+        reply = _route(conv, lead, text)
+        _log_message(conv, direction="out", content=reply)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        raise
 
     return reply
 

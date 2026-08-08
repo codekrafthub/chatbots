@@ -44,6 +44,12 @@ class Config:
     TWILIO_WHATSAPP_FROM = os.environ.get(
         "TWILIO_WHATSAPP_FROM", "whatsapp:+14155238886"
     )
+    # Set to "false" locally only if you need to hit /webhook/twilio with tools
+    # like curl/Postman that can't produce a real Twilio signature. Leave "true"
+    # (default) whenever the sandbox/production number is actually wired up.
+    TWILIO_VALIDATE_SIGNATURE = os.environ.get(
+        "TWILIO_VALIDATE_SIGNATURE", "true"
+    ).lower() not in ("false", "0", "no")
  
     # ── Bot identity ──────────────────────────────────────────────────────────
     BOT_NAME   = os.environ.get("BOT_NAME",   "ShopBot")

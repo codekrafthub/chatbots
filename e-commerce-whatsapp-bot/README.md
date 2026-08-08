@@ -222,6 +222,39 @@ https://your-domain.com/webhook
 
 ---
 
+
+---
+
+# Database Setup
+
+These commands must be run **manually once** before starting the app for the first time.
+The application does not create tables or seed data automatically on startup.
+
+## Initialise Database Tables
+
+```bash
+flask init-db
+```
+
+## Seed Sample Data
+
+Loads sample products, categories, FAQs and orders:
+
+```bash
+flask seed-db
+```
+
+## Create Admin Login
+
+Creates your admin dashboard credentials:
+
+```bash
+flask create-admin
+```
+
+---
+
+
 # Running the Application
 
 ## Development Mode
