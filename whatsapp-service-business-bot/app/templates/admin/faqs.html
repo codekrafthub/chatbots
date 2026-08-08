@@ -1,0 +1,23 @@
+{% extends "admin/layout.html" %}
+{% block title %}FAQ Management{% endblock %}
+{% block admin_content %}
+<h1>FAQ Management</h1>
+<section class="card">
+<h2>Add FAQ</h2>
+<form method="post" class="stack-form">
+  <label>Question <input name="question" required></label>
+  <label>Answer <textarea name="answer" required></textarea></label>
+  <label>Category <input name="category" value="general"></label>
+  <label>Keywords <input name="keywords" placeholder="delivery, timing, refund"></label>
+  <label><input name="is_active" type="checkbox" checked> Active</label>
+  <button class="btn primary">Add FAQ</button>
+</form>
+</section>
+<section class="card">
+<table><thead><tr><th>Question</th><th>Answer</th><th>Category</th><th>Keywords</th><th>Active</th><th>Action</th></tr></thead><tbody>
+{% for faq in faqs %}
+<tr><td>{{ faq.question }}</td><td>{{ faq.answer }}</td><td>{{ faq.category }}</td><td>{{ faq.keywords }}</td><td>{{ 'yes' if faq.is_active else 'no' }}</td><td><form method="post" action="{{ url_for('admin.faq_toggle', faq_id=faq.id) }}"><button>{{ 'Disable' if faq.is_active else 'Enable' }}</button></form></td></tr>
+{% endfor %}
+</tbody></table>
+</section>
+{% endblock %}

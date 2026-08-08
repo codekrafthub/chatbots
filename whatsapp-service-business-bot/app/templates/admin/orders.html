@@ -1,0 +1,19 @@
+{% extends "admin/layout.html" %}
+{% block title %}Orders{% endblock %}
+{% block admin_content %}
+<h1>Orders</h1>
+<section class="card">
+<table><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Update</th></tr></thead><tbody>
+{% for order in orders %}
+<tr>
+  <td>{{ order.order_number }}<br><span class="muted">{{ order.created_at.strftime('%d %b %Y %H:%M') }}</span></td>
+  <td>{{ order.customer.name or '' }}<br><span class="muted">{{ order.customer.phone }}</span></td>
+  <td>{% for item in order.items %}{{ item.menu_item.name }} x {{ item.quantity }}<br>{% endfor %}</td>
+  <td>₹{{ order.total_amount }}</td>
+  <td><span class="pill">{{ order.status }}</span></td>
+  <td><form method="post" action="{{ url_for('admin.update_order_status', order_id=order.id) }}" class="inline-form"><select name="status"><option>confirmed</option><option>preparing</option><option>ready</option><option>out_for_delivery</option><option>completed</option><option>cancelled</option></select><button>Save</button></form></td>
+</tr>
+{% endfor %}
+</tbody></table>
+</section>
+{% endblock %}

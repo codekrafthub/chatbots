@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}WhatsApp Service Bot{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('public.index') }}">WhatsApp Service Bot</a>
+    <nav>
+      <a href="{{ url_for('public.demo') }}">Demo Chat</a>
+      {% if current_user.is_authenticated %}
+        <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
+        <form class="inline" method="post" action="{{ url_for('admin.logout') }}"><button class="link-btn">Logout</button></form>
+      {% else %}
+        <a href="{{ url_for('admin.login') }}">Admin</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-wrap">
+          {% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">Built for service businesses: FAQ, ordering, booking, leads, CRM records, analytics.</footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

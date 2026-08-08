@@ -1,0 +1,14 @@
+{% extends "admin/layout.html" %}
+{% block title %}Conversation #{{ conversation.id }}{% endblock %}
+{% block admin_content %}
+<h1>Conversation #{{ conversation.id }}</h1>
+<p class="muted">Customer: {{ conversation.customer.name or 'Unknown' }} — {{ conversation.customer.phone }}</p>
+<section class="chat-log admin-chat">
+  {% for msg in conversation.messages %}
+    <div class="bubble {{ 'user' if msg.direction == 'inbound' else 'bot' }}">
+      <small>{{ msg.direction }} • {{ msg.created_at.strftime('%d %b %H:%M') }}</small><br>
+      {{ msg.text | replace('\n', '<br>') | safe }}
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}

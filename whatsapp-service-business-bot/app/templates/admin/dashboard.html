@@ -1,0 +1,54 @@
+{% extends "admin/layout.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block admin_content %}
+<h1>Analytics Dashboard</h1>
+<div class="stats-grid">
+  <div class="stat"><span>Revenue</span><strong>₹{{ '%.2f'|format(metrics.revenue) }}</strong></div>
+  <div class="stat"><span>Orders</span><strong>{{ metrics.orders }}</strong></div>
+  <div class="stat"><span>Bookings</span><strong>{{ metrics.bookings }}</strong></div>
+  <div class="stat"><span>Leads</span><strong>{{ metrics.leads }}</strong></div>
+  <div class="stat"><span>Customers</span><strong>{{ metrics.customers }}</strong></div>
+  <div class="stat"><span>Conversations</span><strong>{{ metrics.conversations }}</strong></div>
+  <div class="stat"><span>Messages</span><strong>{{ metrics.messages }}</strong></div>
+  <div class="stat"><span>Conversion</span><strong>{{ metrics.conversion_rate }}%</strong></div>
+</div>
+
+<div class="grid two">
+  <section class="card">
+    <h2>Orders by status</h2>
+    {% for status, count in orders_by_status %}
+      <div class="bar-row"><span>{{ status }}</span><div class="bar"><i style="width: {{ [count * 15, 100]|min }}%"></i></div><b>{{ count }}</b></div>
+    {% else %}<p>No orders yet.</p>{% endfor %}
+  </section>
+  <section class="card">
+    <h2>Leads by status</h2>
+    {% for status, count in leads_by_status %}
+      <div class="bar-row"><span>{{ status }}</span><div class="bar"><i style="width: {{ [count * 20, 100]|min }}%"></i></div><b>{{ count }}</b></div>
+    {% else %}<p>No leads yet.</p>{% endfor %}
+  </section>
+</div>
+
+<section class="card">
+  <h2>Messages in last 7 days</h2>
+  <div class="sparkline">
+    {% for point in daily_messages %}
+      <div title="{{ point.date }}: {{ point.count }}" style="height: {{ [point.count * 14 + 10, 120]|min }}px"><span>{{ point.count }}</span></div>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="grid two">
+  <section class="card">
+    <h2>Recent orders</h2>
+    <table><thead><tr><th>Order</th><th>Customer</th><th>Status</th><th>Total</th></tr></thead><tbody>
+      {% for order in recent_orders %}<tr><td>{{ order.order_number }}</td><td>{{ order.customer.phone }}</td><td><span class="pill">{{ order.status }}</span></td><td>₹{{ order.total_amount }}</td></tr>{% endfor %}
+    </tbody></table>
+  </section>
+  <section class="card">
+    <h2>Recent conversations</h2>
+    <table><thead><tr><th>ID</th><th>Customer</th><th>Updated</th></tr></thead><tbody>
+      {% for conv in recent_conversations %}<tr><td><a href="{{ url_for('admin.conversation_detail', conversation_id=conv.id) }}">#{{ conv.id }}</a></td><td>{{ conv.customer.phone }}</td><td>{{ conv.updated_at.strftime('%d %b %H:%M') }}</td></tr>{% endfor %}
+    </tbody></table>
+  </section>
+</div>
+{% endblock %}

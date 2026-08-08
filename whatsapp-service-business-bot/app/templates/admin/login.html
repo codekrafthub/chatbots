@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+{% block content %}
+<section class="auth-card">
+  <h1>Admin Login</h1>
+  <p class="muted">Default credentials come from your <code>.env</code> file.</p>
+  <form method="post" class="stack-form">
+    <label>Email <input type="email" name="email" value="admin@example.com" required></label>
+    <label>Password <input type="password" name="password" placeholder="ChangeMe@12345" required></label>
+    <button class="btn primary" type="submit">Login</button>
+  </form>
+</section>
+{% endblock %}

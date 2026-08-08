@@ -1,0 +1,13 @@
+question,answer,category,keywords,is_active
+What are your opening hours?,We are open Mon-Sun 10:00 AM - 11:00 PM.,hours,"opening,time,timing,hours,open",true
+Do you provide home delivery?,Yes, we provide delivery within our service area. Delivery fee is shown during checkout.,delivery,"delivery,home,deliver,fee",true
+What payment methods do you accept?,We accept cash, UPI and card payments. Online payment confirmation can be handled manually by staff.,payment,"payment,upi,card,cash,cod",true
+Can I reserve a table?,Yes. Type book and I will collect your name, time and number of guests.,booking,"booking,reservation,table,appointment",true
+Do you take bulk or catering orders?,Yes, we accept corporate, party and catering orders. Type human and share your requirement.,catering,"bulk,catering,party,corporate,event",true
+How can I track my order?,Send status followed by your order number, for example status ORD-ABC123.,orders,"track,status,order",true
+Can I cancel an order?,Cancellation depends on preparation status. Type human with your order number for staff help.,orders,"cancel,cancellation,refund",true
+Do you have vegetarian options?,Yes, many items are vegetarian. Look for veg tags in the menu.,menu,"veg,vegetarian,paneer",true
+Do you have spicy food?,Yes. Items tagged spicy have a higher spice level. You can request mild spice in the order notes by asking staff.,menu,"spicy,mild,hot",true
+Where are you located?,Our demo address is MG Road, Pune, Maharashtra. Update BUSINESS_ADDRESS in .env for your client.,location,"address,location,where",true
+Do you provide GST invoice?,Yes, GST invoices can be provided for eligible business orders. Type human for invoice support.,billing,"gst,invoice,bill,tax",true
+How do I give feedback?,Type feedback and rate your experience from 1 to 5.,feedback,"feedback,review,rating",true

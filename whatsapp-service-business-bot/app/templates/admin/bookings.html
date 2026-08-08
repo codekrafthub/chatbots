@@ -1,0 +1,15 @@
+{% extends "admin/layout.html" %}
+{% block title %}Bookings{% endblock %}
+{% block admin_content %}
+<h1>Bookings</h1>
+<section class="card">
+<table><thead><tr><th>Booking</th><th>Name</th><th>Phone</th><th>Time</th><th>People</th><th>Status</th><th>Update</th></tr></thead><tbody>
+{% for booking in bookings %}
+<tr>
+  <td>{{ booking.booking_number }}</td><td>{{ booking.name }}</td><td>{{ booking.phone }}</td><td>{{ booking.scheduled_for.strftime('%d %b %Y %I:%M %p') }}</td><td>{{ booking.party_size }}</td><td><span class="pill">{{ booking.status }}</span></td>
+  <td><form method="post" action="{{ url_for('admin.update_booking_status', booking_id=booking.id) }}" class="inline-form"><select name="status"><option>confirmed</option><option>completed</option><option>cancelled</option><option>no_show</option></select><button>Save</button></form></td>
+</tr>
+{% endfor %}
+</tbody></table>
+</section>
+{% endblock %}

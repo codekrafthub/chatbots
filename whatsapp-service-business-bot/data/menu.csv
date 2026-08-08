@@ -1,0 +1,21 @@
+sku,name,category,description,price,prep_time_minutes,tags,is_available
+PZ01,Margherita Pizza,Pizza,Classic cheese and tomato pizza with basil,249,18,"veg,bestseller",true
+PZ02,Paneer Tikka Pizza,Pizza,Paneer tikka topping with capsicum and onion,329,22,"veg,spicy",true
+PZ03,Chicken Tandoori Pizza,Pizza,Smoky chicken topping with tandoori sauce,379,24,"non-veg,spicy",true
+BR01,Classic Veg Burger,Burgers,Crispy veg patty with lettuce and house sauce,149,12,"veg",true
+BR02,Cheese Chicken Burger,Burgers,Chicken patty with cheese and caramelized onion,229,14,"non-veg,bestseller",true
+BR03,Paneer Makhani Burger,Burgers,Paneer patty with makhani sauce,199,14,"veg",true
+IN01,Butter Paneer Masala,Indian Mains,Creamy paneer gravy served with salad,289,20,"veg,bestseller",true
+IN02,Dal Makhani,Indian Mains,Slow-cooked black lentils with butter,239,18,"veg",true
+IN03,Chicken Biryani,Indian Mains,Hyderabadi-style biryani with raita,349,25,"non-veg,bestseller",true
+IN04,Veg Biryani,Indian Mains,Vegetable biryani with raita,259,22,"veg",true
+SN01,Masala Fries,Snacks,Crispy fries tossed with Indian masala,119,10,"veg",true
+SN02,Peri Peri Fries,Snacks,Fries with peri peri spice mix,129,10,"veg,spicy",true
+SN03,Hara Bhara Kebab,Snacks,Spinach and peas kebab with mint chutney,179,15,"veg",true
+DR01,Mango Lassi,Beverages,Thick chilled mango yogurt drink,99,5,"veg",true
+DR02,Fresh Lime Soda,Beverages,Sweet or salted fresh lime soda,79,5,"veg",true
+DR03,Cold Coffee,Beverages,Chilled coffee with ice cream,129,6,"veg",true
+DS01,Gulab Jamun,Desserts,Two warm gulab jamuns,99,5,"veg",true
+DS02,Chocolate Brownie,Desserts,Chocolate brownie with chocolate sauce,149,7,"veg",true
+COM01,Family Veg Combo,Combos,Paneer masala dal makhani veg biryani and 2 drinks,899,30,"veg,value",true
+COM02,Party Pizza Combo,Combos,Two pizzas fries and two beverages,999,28,"bestseller,value",true

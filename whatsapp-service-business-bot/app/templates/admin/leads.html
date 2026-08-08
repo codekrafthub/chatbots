@@ -1,0 +1,12 @@
+{% extends "admin/layout.html" %}
+{% block title %}Leads{% endblock %}
+{% block admin_content %}
+<h1>Leads</h1>
+<section class="card">
+<table><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Interest</th><th>Status</th><th>Update</th></tr></thead><tbody>
+{% for lead in leads %}
+<tr><td>{{ lead.name or '' }}</td><td>{{ lead.phone or '' }}</td><td>{{ lead.email or '' }}</td><td>{{ lead.interest }}<br><span class="muted">{{ lead.notes }}</span></td><td><span class="pill">{{ lead.status }}</span></td><td><form method="post" action="{{ url_for('admin.update_lead_status', lead_id=lead.id) }}" class="inline-form"><select name="status"><option>new</option><option>contacted</option><option>qualified</option><option>won</option><option>lost</option></select><button>Save</button></form></td></tr>
+{% endfor %}
+</tbody></table>
+</section>
+{% endblock %}

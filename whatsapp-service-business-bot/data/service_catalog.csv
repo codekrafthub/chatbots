@@ -1,0 +1,4 @@
+service_code,service_name,duration_minutes,price,description
+TABLE,Table Reservation,90,0,Reserve a restaurant table
+CATERING,Catering Consultation,30,0,Discuss bulk or event food requirements
+CALLBACK,Staff Callback,10,0,Human support callback request

@@ -1,0 +1,4 @@
+order_number,customer_phone,status,total_amount,created_at
+ORD-DEMO01,demo:+919000000001,completed,645.45,2026-06-01T13:05:00
+ORD-DEMO02,demo:+919000000002,preparing,428.45,2026-06-02T19:35:00
+ORD-DEMO03,demo:+919000000003,confirmed,1068.95,2026-06-03T12:10:00

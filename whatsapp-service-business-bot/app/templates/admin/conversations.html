@@ -1,0 +1,12 @@
+{% extends "admin/layout.html" %}
+{% block title %}Conversations{% endblock %}
+{% block admin_content %}
+<h1>Conversations</h1>
+<section class="card">
+<table><thead><tr><th>ID</th><th>Customer</th><th>Channel</th><th>Status</th><th>Messages</th><th>Updated</th></tr></thead><tbody>
+{% for conv in conversations %}
+<tr><td><a href="{{ url_for('admin.conversation_detail', conversation_id=conv.id) }}">#{{ conv.id }}</a></td><td>{{ conv.customer.name or '' }}<br><span class="muted">{{ conv.customer.phone }}</span></td><td>{{ conv.channel }}</td><td>{{ conv.status }}</td><td>{{ conv.messages|length }}</td><td>{{ conv.updated_at.strftime('%d %b %Y %H:%M') }}</td></tr>
+{% endfor %}
+</tbody></table>
+</section>
+{% endblock %}

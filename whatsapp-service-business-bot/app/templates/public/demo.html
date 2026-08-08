@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Demo Chat{% endblock %}
+{% block content %}
+<section class="card demo-layout">
+  <div>
+    <h1>Browser Demo Chat</h1>
+    <p>This simulator uses the same bot engine as the WhatsApp webhook. No Twilio credentials are needed.</p>
+    <p class="muted">Demo user: <code>{{ demo_phone }}</code></p>
+    <div class="quick-commands">
+      <button data-msg="hi">hi</button>
+      <button data-msg="menu">menu</button>
+      <button data-msg="order">order</button>
+      <button data-msg="PZ01 x2, BR01 x1">PZ01 x2, BR01 x1</button>
+      <button data-msg="done">done</button>
+      <button data-msg="book">book</button>
+      <button data-msg="human">human</button>
+    </div>
+  </div>
+  <div class="chat-panel">
+    <div id="chatLog" class="chat-log"></div>
+    <form id="chatForm" class="chat-form">
+      <input id="messageInput" autocomplete="off" placeholder="Type message, e.g., menu" required>
+      <button class="btn primary" type="submit">Send</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/demo.js') }}"></script>{% endblock %}

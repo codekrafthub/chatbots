@@ -1,0 +1,26 @@
+{% extends "admin/layout.html" %}
+{% block title %}Menu Management{% endblock %}
+{% block admin_content %}
+<h1>Menu Management</h1>
+<section class="card">
+<h2>Add menu item</h2>
+<form method="post" class="grid form-grid">
+  <label>SKU <input name="sku" placeholder="PZ99" required></label>
+  <label>Name <input name="name" placeholder="Paneer Pizza" required></label>
+  <label>Category <input name="category" placeholder="Pizza" required></label>
+  <label>Price <input name="price" type="number" step="0.01" placeholder="249" required></label>
+  <label>Prep minutes <input name="prep_time_minutes" type="number" value="15"></label>
+  <label>Tags <input name="tags" placeholder="veg, spicy"></label>
+  <label class="span-2">Description <input name="description"></label>
+  <label><input name="is_available" type="checkbox" checked> Available</label>
+  <button class="btn primary">Add Item</button>
+</form>
+</section>
+<section class="card">
+<table><thead><tr><th>SKU</th><th>Name</th><th>Category</th><th>Price</th><th>Available</th><th>Action</th></tr></thead><tbody>
+{% for item in items %}
+<tr><td>{{ item.sku }}</td><td>{{ item.name }}<br><span class="muted">{{ item.description }}</span></td><td>{{ item.category }}</td><td>₹{{ item.price }}</td><td>{{ 'yes' if item.is_available else 'no' }}</td><td><form method="post" action="{{ url_for('admin.menu_toggle', item_id=item.id) }}"><button>{{ 'Disable' if item.is_available else 'Enable' }}</button></form></td></tr>
+{% endfor %}
+</tbody></table>
+</section>
+{% endblock %}

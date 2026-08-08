@@ -1,0 +1,1 @@
+This package was upgraded to use sentence-transformers/all-MiniLM-L6-v2 for semantic FAQ matching. Run pip install -r requirements.txt and start as before.
