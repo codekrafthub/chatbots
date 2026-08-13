@@ -12,6 +12,7 @@ Run with:
 """
 
 import json
+import re
 
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import JSONResponse, Response
@@ -28,8 +29,17 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # HTML templates (index.html)
 templates = Jinja2Templates(directory="templates")
 
-with open("hospital_data.json", "r", encoding="utf-8") as file:
-    hospital = json.load(file)
+try:
+    with open("hospital_data.json", "r", encoding="utf-8") as file:
+        hospital = json.load(file)
+except FileNotFoundError:
+    raise RuntimeError(
+        "hospital_data.json not found. Please make sure the file exists."
+    )
+except json.JSONDecodeError:
+    raise RuntimeError(
+        "hospital_data.json contains invalid JSON."
+    )
 
 
 class ChatRequest(BaseModel):
@@ -115,7 +125,7 @@ def get_reply(raw_message: str) -> str:
         )
 
     # ---------------- Laboratory ---------------- #
-    elif "lab" in message or "laboratory" in message or "test" in message:
+    elif "lab" in message or "laboratory" in message or re.search(r"\btest\b", message):
         lab = hospital["laboratory"]
         reply = (
             "🧪 Laboratory\n\n"
@@ -183,8 +193,14 @@ async def home(request: Request):
 
 @app.post("/chat")
 async def chat(payload: ChatRequest):
-    """Used by your existing script.js web chat widget (fetch('/chat'))."""
-    reply = get_reply(payload.message)
+    message = payload.message.strip()
+
+    if not message:
+        return JSONResponse(
+            {"reply": "Please enter a message so I can help you."}
+        )
+
+    reply = get_reply(message)
     return JSONResponse({"reply": reply})
 
 
@@ -204,7 +220,3 @@ async def whatsapp_webhook(Body: str = Form(...), From: str = Form(...)):
 
     return Response(content=str(twiml_response), media_type="application/xml")
 
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
