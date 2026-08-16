@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Government Hospital WhatsApp Assistant</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            🏥
+            <span>Government Hospital Assistant</span>
+        </div>
+
+        <a href="#chat-section" class="demo-btn">
+            Try Demo
+        </a>
+
+    </header>
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-left">
+
+            <span class="badge">
+                WhatsApp Chatbot
+            </span>
+
+            <h1>
+                Government Hospital
+                <br>
+                Assistant
+            </h1>
+
+            <p>
+                Get instant information about OPD timings, emergency services,
+                hospital departments, registration, laboratory, blood bank,
+                pharmacy and Ayushman Bharat through a WhatsApp-style chatbot.
+            </p>
+
+            <ul>
+                <li>✔ OPD Timing</li>
+                <li>✔ Emergency</li>
+                <li>✔ Department Guidance</li>
+                <li>✔ Registration</li>
+                <li>✔ Blood Bank</li>
+                <li>✔ Laboratory</li>
+                <li>✔ X-Ray</li>
+                <li>✔ Pharmacy</li>
+                <li>✔ Ayushman Bharat</li>
+            </ul>
+
+            <a href="#chat-section" class="start-btn">
+                Try Demo →
+            </a>
+
+        </div>
+
+        <div class="hero-right">
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="WhatsApp">
+
+        </div>
+
+    </section>
+
+    <!-- ================= CHAT ================= -->
+
+    <section id="chat-section" class="chat-section">
+
+        <div class="chat-window">
+
+            <!-- HEADER -->
+
+            <div class="chat-header">
+
+                <div class="chat-user">
+
+                    <div class="avatar">
+                        🏥
+                    </div>
+
+                    <div>
+                        <h3>Government Hospital Assistant</h3>
+                        <span>🟢 Online</span>
+                    </div>
+
+                </div>
+
+                <div class="header-icons">
+                    🔍 ⋮
+                </div>
+
+            </div>
+
+            <!-- CHAT AREA -->
+
+            <div id="chat-box" class="chat-box">
+
+                <div class="date-divider">
+                    Today
+                </div>
+
+                <div class="bot-message">
+                    👋 Hello!<br><br>
+                    How can I help you today?
+
+                    <span class="time">
+                        10:00 AM
+                    </span>
+                </div>
+
+            </div>
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="quick-actions">
+
+                <button onclick="quickMessage('OPD timing')">
+                    OPD
+                </button>
+
+                <button onclick="quickMessage('Emergency')">
+                    Emergency
+                </button>
+
+                <button onclick="quickMessage('Cardiology')">
+                    Cardiology
+                </button>
+
+                <button onclick="quickMessage('Orthopedics')">
+                    Orthopedics
+                </button>
+
+                <button onclick="quickMessage('Blood Bank')">
+                    Blood Bank
+                </button>
+
+                <button onclick="quickMessage('Laboratory')">
+                    Laboratory
+                </button>
+
+            </div>
+
+            <!-- INPUT -->
+
+            <div class="input-area">
+
+                <button class="icon-btn">
+                    😊
+                </button>
+
+                <button class="icon-btn">
+                    📎
+                </button>
+
+                <input
+                    id="user-input"
+                    type="text"
+                    placeholder="Type a message"
+                    autocomplete="off">
+
+                <button
+                    id="send-btn"
+                    onclick="sendMessage()">
+                    🎤
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>

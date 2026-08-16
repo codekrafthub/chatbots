@@ -1,0 +1,544 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    background:#efeae2 url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+    color:#111;
+
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+
+    height:75px;
+
+    background:#111827;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 60px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    box-shadow:0 2px 10px rgba(0,0,0,.2);
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    color:#25D366;
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.logo span{
+
+    font-size:22px;
+
+}
+
+.demo-btn{
+
+    text-decoration:none;
+
+    background:#25D366;
+
+    color:white;
+
+    padding:12px 28px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.demo-btn:hover{
+
+    background:#128C7E;
+
+}
+
+/* ================= HERO ================= */
+
+.hero{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:70px 40px;
+
+    gap:70px;
+
+}
+
+.hero-left{
+
+    flex:1;
+
+}
+
+.badge{
+
+    display:inline-block;
+
+    background:#dcf8c6;
+
+    color:#128C7E;
+
+    padding:8px 18px;
+
+    border-radius:25px;
+
+    font-weight:600;
+
+    margin-bottom:22px;
+
+}
+
+.hero h1{
+
+    font-size:54px;
+
+    line-height:1.15;
+
+    margin-bottom:20px;
+
+}
+
+.hero p{
+
+    font-size:20px;
+
+    line-height:1.8;
+
+    color:#444;
+
+    margin-bottom:25px;
+
+}
+
+.hero ul{
+
+    margin-bottom:35px;
+
+    line-height:2;
+
+    font-size:18px;
+
+}
+
+.start-btn{
+
+    display:inline-block;
+
+    text-decoration:none;
+
+    background:#25D366;
+
+    color:white;
+
+    padding:15px 34px;
+
+    border-radius:35px;
+
+    font-weight:bold;
+
+}
+
+.start-btn:hover{
+
+    background:#128C7E;
+
+}
+
+.hero-right{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.hero-right img{
+
+    width:260px;
+
+}
+
+/* ================= CHAT ================= */
+
+.chat-section{
+
+    display:flex;
+
+    justify-content:center;
+
+    padding:50px;
+
+}
+
+.chat-window{
+
+    width:1000px;
+
+    height:720px;
+
+    background:white;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* ================= HEADER ================= */
+
+.chat-header{
+
+    height:75px;
+
+    background:#075E54;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 22px;
+
+}
+
+.chat-user{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.avatar{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:26px;
+
+}
+
+.chat-user h3{
+
+    font-size:22px;
+
+}
+
+.chat-user span{
+
+    color:#c8ffd4;
+
+}
+
+.header-icons{
+
+    font-size:24px;
+
+    display:flex;
+
+    gap:20px;
+
+}
+
+/* ================= CHAT ================= */
+
+.chat-box{
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:28px;
+
+    background:#efeae2 url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+
+}
+
+.date-divider{
+
+    width:90px;
+
+    margin:0 auto 25px;
+
+    background:white;
+
+    text-align:center;
+
+    padding:6px;
+
+    border-radius:10px;
+
+    color:#666;
+
+    font-size:13px;
+
+}
+
+.bot-message,
+.user-message{
+
+    max-width:70%;
+
+    padding:14px 18px;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+    position:relative;
+
+    line-height:1.6;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+
+}
+
+.bot-message{
+
+    background:white;
+
+}
+
+.user-message{
+
+    background:#DCF8C6;
+
+    margin-left:auto;
+
+}
+
+.time{
+
+    display:block;
+
+    text-align:right;
+
+    font-size:11px;
+
+    color:gray;
+
+    margin-top:8px;
+
+}
+
+/* ================= BUTTONS ================= */
+
+.quick-actions{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    padding:15px;
+
+    background:white;
+
+    border-top:1px solid #ddd;
+
+}
+
+.quick-actions button{
+
+    background:#25D366;
+
+    color:white;
+
+    border:none;
+
+    padding:10px 18px;
+
+    border-radius:25px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.quick-actions button:hover{
+
+    background:#128C7E;
+
+}
+
+/* ================= INPUT ================= */
+
+.input-area{
+
+    background:#f0f2f5;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:15px;
+
+}
+
+.icon-btn{
+
+    border:none;
+
+    background:none;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+}
+
+.input-area input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:14px 20px;
+
+    font-size:16px;
+
+}
+
+#send-btn{
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#25D366;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:24px;
+
+}
+
+#send-btn:hover{
+
+    background:#128C7E;
+
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+.hero{
+
+    flex-direction:column;
+
+    text-align:center;
+
+}
+
+.hero h1{
+
+    font-size:38px;
+
+}
+
+.chat-window{
+
+    width:100%;
+
+    height:650px;
+
+}
+
+.navbar{
+
+    padding:0 20px;
+
+}
+
+.logo span{
+
+    font-size:18px;
+
+}
+
+}

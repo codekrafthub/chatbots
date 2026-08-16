@@ -1,0 +1,209 @@
+{
+  "hospital_name": "City Government Hospital",
+
+  "opd_timings": "Monday to Saturday: 9:00 AM - 4:00 PM",
+
+  "emergency": "🚑 24×7 Emergency Services are available. Please proceed directly to the Emergency Department.",
+
+  "ayushman": "🏥 Ayushman Bharat Scheme is available. Please carry your Aadhaar Card and Ayushman Bharat Card for verification.",
+
+  "contact": {
+    "phone": "+91-1800-123-4567",
+    "email": "info@cityhospital.gov.in",
+    "address": "City Government Hospital, Main Road, Jaipur, Rajasthan"
+  },
+
+  "registration": {
+    "location": "Ground Floor - Registration Counter",
+    "timing": "Monday to Saturday: 8:30 AM - 3:30 PM",
+    "note": "Please carry Aadhaar Card and previous medical records if available."
+  },
+
+  "pharmacy": {
+    "location": "Ground Floor",
+    "timing": "Daily: 8:00 AM - 8:00 PM",
+    "note": "Medicines are issued only with a valid doctor's prescription."
+  },
+
+  "blood_bank": {
+    "location": "First Floor",
+    "timing": "Available 24×7",
+    "note": "Carry a valid ID proof if donating blood."
+  },
+
+  "laboratory": {
+    "location": "Ground Floor",
+    "timing": "8:00 AM - 5:00 PM",
+    "note": "Please bring your doctor's test prescription."
+  },
+
+  "xray": {
+    "location": "Ground Floor",
+    "timing": "9:00 AM - 4:00 PM"
+  },
+
+  "departments": {
+
+    "cardiology": {
+      "name": "Cardiology",
+      "location": "Second Floor, Block B",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Please carry previous ECG/ECHO reports if available."
+    },
+
+    "heart": {
+      "name": "Cardiology",
+      "location": "Second Floor, Block B",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Please carry previous ECG/ECHO reports if available."
+    },
+
+    "chest pain": {
+      "name": "Cardiology",
+      "location": "Second Floor, Block B",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Chest pain may require immediate emergency evaluation."
+    },
+
+    "orthopedics": {
+      "name": "Orthopedics",
+      "location": "Ground Floor, Block A",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Carry previous X-rays or MRI reports if available."
+    },
+
+    "bone": {
+      "name": "Orthopedics",
+      "location": "Ground Floor, Block A",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Carry previous X-rays or MRI reports if available."
+    },
+
+    "fracture": {
+      "name": "Orthopedics",
+      "location": "Ground Floor, Block A",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Emergency fractures should immediately visit Emergency Services."
+    },
+
+    "pediatrics": {
+      "name": "Pediatrics",
+      "location": "First Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Children below 12 years are treated here."
+    },
+
+    "baby": {
+      "name": "Pediatrics",
+      "location": "First Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Children below 12 years are treated here."
+    },
+
+    "child": {
+      "name": "Pediatrics",
+      "location": "First Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Children below 12 years are treated here."
+    },
+
+    "gynecology": {
+      "name": "Gynecology",
+      "location": "Third Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Please carry previous medical reports."
+    },
+
+    "pregnancy": {
+      "name": "Gynecology",
+      "location": "Third Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Please carry previous ultrasound reports if available."
+    },
+
+    "general medicine": {
+      "name": "General Medicine",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "General consultation for fever, cough, cold and headache."
+    },
+
+    "fever": {
+      "name": "General Medicine",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Drink plenty of fluids before visiting if possible."
+    },
+
+    "cold": {
+      "name": "General Medicine",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Wear a mask if you have respiratory symptoms."
+    },
+
+    "cough": {
+      "name": "General Medicine",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Wear a mask while visiting the hospital."
+    },
+
+    "headache": {
+      "name": "General Medicine",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Bring previous prescriptions if headache is recurrent."
+    },
+
+    "dermatology": {
+      "name": "Dermatology",
+      "location": "Second Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Bring previous skin treatment records if available."
+    },
+
+    "skin": {
+      "name": "Dermatology",
+      "location": "Second Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Bring previous skin treatment records if available."
+    },
+
+    "ophthalmology": {
+      "name": "Ophthalmology",
+      "location": "First Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Bring previous eye prescriptions if available."
+    },
+
+    "eye": {
+      "name": "Ophthalmology",
+      "location": "First Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Bring previous eye prescriptions if available."
+    },
+
+    "dental": {
+      "name": "Dental",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Brush teeth before your dental visit if possible."
+    },
+
+    "dentist": {
+      "name": "Dental",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Brush teeth before your dental visit if possible."
+    },
+
+    "tooth": {
+      "name": "Dental",
+      "location": "Ground Floor",
+      "timing": "Monday-Saturday, 9:00 AM - 4:00 PM",
+      "note": "Carry previous dental prescriptions if available."
+    }
+
+  }
+}
